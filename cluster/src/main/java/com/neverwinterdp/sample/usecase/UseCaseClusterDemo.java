@@ -81,8 +81,8 @@ public class UseCaseClusterDemo {
         "  --member-role sparkngin" +
         "  --autostart --module Sparkngin" +
         "  -Pmodule.data.drop=true" +
-        "  -Phttp-listen-port=8181" +
-        "  -Pforwarder-class=" + NullDevMessageForwarder.class.getName()
+        "  -Psparkngin:http-listen-port=8181" +
+        "  -Psparkngin:forwarder-class=" + NullDevMessageForwarder.class.getName()
     ) ;
     
     shell.execute(

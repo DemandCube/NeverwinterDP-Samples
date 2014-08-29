@@ -1,12 +1,9 @@
 #Setup
 1. Run: 
+  
+The sample demo depends on all the NeverwinterDP projects , so make sure that check out all the NeverwinterDP-Commons, Queuengin, Sparkngin, Scribengin , build and install before running the sample.
 
   ```
-  git clone http://github.com/DemandCube/NeverwinterDP-Commons
-  cd NeverwinterDP-Commons
-  gradle clean build install -x test
-  gradle eclipse
-  cd ../
   git clone http://github.com/DemandCube/NeverwinterDP-Samples
   cd NeverwinterDP-Samples/cluster
   gradle clean build install -x test
@@ -14,7 +11,7 @@
   ```
 1. Open Eclipse
 1. File -> Import -> General/Existing Project into Workspace
-1. Import both NeverwinterDP-Commons and NeverwinterDP-Samples into your workspace
+1. Import NeverwinterDP-Samples into your workspace
  
 
 #Files of Importance

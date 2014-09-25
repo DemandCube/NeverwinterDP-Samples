@@ -2,7 +2,7 @@ package com.neverwinterdp.sample.usecase;
 
 import com.neverwinterdp.server.Server;
 import com.neverwinterdp.server.shell.Shell;
-import com.neverwinterdp.sparkngin.http.NullDevMessageForwarder;
+import com.neverwinterdp.sparkngin.NullDevMessageForwarder;
 import com.neverwinterdp.util.FileUtil;
 
 /**

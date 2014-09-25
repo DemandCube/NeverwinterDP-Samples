@@ -6,15 +6,13 @@ import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 
-import com.codahale.metrics.Counter;
-import com.codahale.metrics.Timer;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import com.neverwinterdp.server.service.AbstractService;
 import com.neverwinterdp.util.LoggerFactory;
-import com.neverwinterdp.util.monitor.ApplicationMonitor;
-import com.neverwinterdp.util.monitor.ComponentMonitor;
-import com.neverwinterdp.util.monitor.ComponentMonitorable;
+import com.neverwinterdp.yara.Counter;
+import com.neverwinterdp.yara.MetricRegistry;
+import com.neverwinterdp.yara.Timer;
 /**
  * @author Tuan Nguyen
  * @email  tuan08@gmail.com
@@ -24,7 +22,7 @@ import com.neverwinterdp.util.monitor.ComponentMonitorable;
  * @see com.neverwinterdp.server.module.HelloModule
  * @see com.neverwinterdp.server.module.HelloModuleDisable
  */
-public class HelloService extends AbstractService implements ComponentMonitorable  {
+public class HelloService extends AbstractService {
   private Logger logger ;
   
   @Inject @Named("hello")
@@ -33,7 +31,7 @@ public class HelloService extends AbstractService implements ComponentMonitorabl
   @Inject(optional=true) @Named("helloProperties")
   private Map<String, String>   helloProperties;
   
-  private ComponentMonitor monitorRegistry ;
+  private MetricRegistry metricRegistry ;
 
   public String getHelloProperty() { return helloProperty ; }
   
@@ -47,12 +45,10 @@ public class HelloService extends AbstractService implements ComponentMonitorabl
   }
   
   @Inject
-  public void init(ApplicationMonitor mRegistry) {
-    this.monitorRegistry = mRegistry.createComponentMonitor("HelloModule", getClass().getSimpleName()) ;
+  public void init(MetricRegistry metricRegistry) {
+    this.metricRegistry = metricRegistry ;
   }
 
-  public ComponentMonitor getComponentMonitor() { return this.monitorRegistry ; }
-  
   @PreDestroy
   public void onDestroy() {
     logger.info("onDestroy()");
@@ -76,10 +72,10 @@ public class HelloService extends AbstractService implements ComponentMonitorabl
    * @return
    */
   public String hello(String message) {
-    Timer helloTimer = monitorRegistry.timer("hello-counter") ;
+    Timer helloTimer = metricRegistry.timer("hello-counter") ;
     Timer.Context ctx = helloTimer.time() ;
-    Counter helloCounter = monitorRegistry.counter("hello-timer") ;
-    helloCounter.inc();
+    Counter helloCounter = metricRegistry.counter("hello-timer") ;
+    helloCounter.incr();
     ctx.stop() ;
     return "Hello " + message;
   }
